@@ -1,0 +1,13 @@
+image,predictor,target,subset,spearman_rho
+brain,accel_realised,zerofill_nrmse,all masks,0.5756543321198467
+brain,sidelobe_energy_fraction,zerofill_nrmse,all masks,0.9261083743842365
+brain,coherence_index,zerofill_nrmse,all masks,0.0829341734877489
+brain,peak_sidelobe_ratio,zerofill_nrmse,all masks,0.6478493338643911
+brain,coherence_index,cs_error_reduction,aliasing masks,-0.4285714285714286
+brain,peak_sidelobe_ratio,cs_error_reduction,aliasing masks,-0.6279289991543936
+phantom,accel_realised,zerofill_nrmse,all masks,0.6087220773828346
+phantom,sidelobe_energy_fraction,zerofill_nrmse,all masks,0.9222769567597153
+phantom,coherence_index,zerofill_nrmse,all masks,0.0728068981773637
+phantom,peak_sidelobe_ratio,zerofill_nrmse,all masks,0.6516860050463291
+phantom,coherence_index,cs_error_reduction,aliasing masks,-0.49624060150375937
+phantom,peak_sidelobe_ratio,cs_error_reduction,aliasing masks,-0.7418920747220781

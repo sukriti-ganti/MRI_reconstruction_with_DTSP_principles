@@ -1,0 +1,70 @@
+# Experiment configuration. Every constant used by scripts/run_all.py lives here.
+
+output:
+  figures: results/figures
+  tables: results/tables
+  dpi: 300
+
+images:
+  - {name: brain, source: brain, slice_idx: 4, size: 256}
+  - {name: phantom, source: phantom, slice_idx: 0, size: 256}
+
+default_image: brain        # used for the galleries F1-F5, F8, F12
+controlled_image: phantom   # sharp edges: used for the Gibbs / apodization figure F9
+
+phase_modes: [none, smooth]
+
+seed: 0
+
+masks:
+  uniform: {}
+  uniform_acs: {acs_lines: 24}
+  random: {seed: 0, include_dc: true}
+  vardens: {center_frac: 0.08, poly_order: 3.0, seed: 0}
+  lowpass: {}
+  partial_fourier: {}
+
+# E1 - acceleration sweep (zero-fill; CS-FISTA stretch recon is added too)
+e1:
+  accels: [2, 3, 4, 6, 8]
+  masks: [uniform, uniform_acs, random, vardens, lowpass]
+  partial_fourier_fracs: [0.55, 0.625, 0.75]   # R = 1/frac, PF cannot exceed R = 2
+  recons: [zerofill, cs_fista]
+  phase_modes: [none, smooth]
+
+# E2/E3 - PSF characterisation and coherence vs error use the E1 masks
+gallery_accel: 4
+gallery_pf_frac: 0.55
+
+# E4 - apodization study on the low-pass mask
+e4:
+  lowpass_fracs: [0.25, 0.5]
+  windows: [rect, hann, hamming, tukey, blackman]
+  tukey_alpha: 0.5
+  # band of pixels 3..10 truncation cells (cell = N / sampled lines) from a
+  # PE edge: beyond the blur of the widest mainlobe, where only ripple remains
+  ringing_roi: {d_min_cells: 3, d_max_cells: 10}
+  window_response_n: 64
+
+# E5 - partial Fourier
+e5:
+  fracs: [0.55, 0.625, 0.75]
+  recons: [zerofill, conjugate_symmetry, pocs]
+  pocs_iters: 20
+
+# E6 - FFT complexity benchmark (1D)
+e6:
+  sizes: [8, 16, 32, 64, 128, 256, 512, 1024, 2048]
+  report_sizes: [64, 128, 256, 512, 1024]
+  repeats: 5
+
+# E7 - aliasing period verification
+e7:
+  accels: [2, 3, 4, 6, 8]
+
+recon:
+  cs_fista: {lam: 0.006, n_iter: 100, levels: 4}
+
+# F12 - what the centre and the periphery of k-space encode
+f12:
+  centre_area_frac: 0.10
